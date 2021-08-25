@@ -1,19 +1,11 @@
 pipeline {
-    
     agent any
-
     stages {
-    
         stage('Build Application') {
-    
             steps {
-                
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
+               sh 'mvn -f java-tomcat-sample/pom.xml clean package'
             }
-    
             post {
-    
                 success {
                     echo "Now Archiving the Artifacts...."
                     archiveArtifacts artifacts: '**/*.war'
