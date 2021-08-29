@@ -1,19 +1,63 @@
+// pipeline {
+//     agent any
+//     stages {
+//         stage('Build Application') {
+//             steps {
+//                sh 'mvn -f java-tomcat-sample/pom.xml clean package'
+//             }
+//             post {
+//                 success {
+//                     echo "Now Archiving the Artifacts...."
+//                     archiveArtifacts artifacts: '**/*.war'
+//                 }
+//             }
+    
+//         }
+
+//     }
+
+// }
+
+
+
 pipeline {
-    agent any
+
+    agent any 
+        
     stages {
-        stage('Build Application') {
-            steps {
-               sh 'mvn -f java-tomcat-sample/pom.xml clean package'
-            }
-            post {
-                success {
-                    echo "Now Archiving the Artifacts...."
-                    archiveArtifacts artifacts: '**/*.war'
+
+
+            stage('Build Application') {
+                steps {
+                    sh 'mvn -f java-tomcat-sample/pom.xml clean package'
+                }
+                post {
+                    success{
+                        echo "Now Archiving the Artifacts......"
+                        archiveArtifacts: '**/*.war'
+                    }
                 }
             }
-    
-        }
+
+            stage('Staging Deployment') {
+                steps {
+                    build job: 'Deploy_To_Dev'
+                }
+       
+            }
+
+             stage('Prod Deployment') {
+                steps {
+                timeout(time:5, unit:'DAYS'){
+                    input message:'Approve PRODUCTION Deployment?'
+                }
+                    build job: 'Deploy_To_Prod'
+                }
+       
+            }
+
 
     }
+
 
 }
