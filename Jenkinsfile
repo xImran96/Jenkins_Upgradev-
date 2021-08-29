@@ -1,26 +1,33 @@
 pipeline {
+
       agent any
+
       stages {
+
             stage('Init') {
                   steps {
-                        echo 'Hi, this is Anshul from LevelUp360'
-                        echo 'We are Starting the Testing'
+                        echo "Salam this is imran from Imrania"
+                        echo "Learn Devops with me"
                   }
             }
             stage('Build') {
                   steps {
-                        echo 'Building Sample Maven Project'
+                        echo "Make my Build"
                   }
             }
-            stage('Deploy') {
+
+            stage('Staging Deployment') {
                   steps {
-                        echo "Deploying in Staging Area"
+                        echo "Make my staging deployment"
                   }
             }
-            stage('Deploy Production') {
+
+           stage('Production Deployment') {
                   steps {
-                        echo "Deploying in Production Area"
+                        echo "Make my production deployment"
                   }
             }
+
       }
+
 }
