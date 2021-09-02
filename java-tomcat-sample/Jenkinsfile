@@ -19,7 +19,7 @@ pipeline {
 
             stage('Staging Deployment') {
                 steps {
-                    build job: 'Deploy_To_Dev'
+                    build job: 'Deploy App Staging Area'
                 }
        
             }
